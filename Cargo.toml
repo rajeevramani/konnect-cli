@@ -1,0 +1,22 @@
+[package]
+name = "konnectctl"
+version = "0.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.5.4", features = ["derive"] }
+log = "0.4"
+reqwest = {version = "0.12.4", features = ["json", "blocking"]}
+serde = {version= "1.0.202", features = ["derive"]}
+tokio = "1.37.0"
+serde_json = "1.0"
+dotenv = "0.15.0"
+env_logger = "0.11.3"
+lazy_static = "1.4.0"
+base64 = "0.22.1"
+
+[dev-dependencies]
+assert_cmd = "2.0.14"
+
