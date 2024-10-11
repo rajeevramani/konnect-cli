@@ -2,21 +2,13 @@ name: konnectl
 
 on:
   push:
-    # branches: [ "main" ]
     tags:
       - 'v*.*.*'
     paths:
       - src/**
       - tests/**
       - .github/**
-  # pull_request:
-  #   branches: [ "main" ]
-  #   paths:
-  #     - src/**
-  #     - tests/**
-  #     - Readme.md
-  #     - .github/**
-  #
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -28,7 +20,7 @@ jobs:
         platform: [ubuntu-latest, macos-latest]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
       with:
@@ -51,12 +43,11 @@ jobs:
       run: |
           tar -czvf konnectl-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz -C target/release konnectctl
     - name: Upload Release Asset
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: konnectctl-${{ github.ref_name }}-${{ matrix.platform }}
         path: |
           konnectl-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz
-          konnectl-${{ github.ref_name }}-${{ matrix.platform }}.zip
 
   release:
     needs: build
@@ -64,12 +55,12 @@ jobs:
 
     steps:
       - name: Download Release Assets for Ubuntu
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: konnectctl-${{ github.ref_name }}-ubuntu-latest
           path: ./release_assets/ubuntu
       - name: Download Release Assets for macOS
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: konnectctl-${{ github.ref_name }}-macos-latest
           path: ./release_assets/macos
@@ -103,6 +94,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./release_assets/macos/konnectl-${{ github.ref_name }}-macos-latest.tar.gz
           asset_name: konnectl-${{ github.ref_name }}-macos-latest.tar.gz
-          asset_content_type: application/gzip
-
-      
+          asset_content_type: application/gzip     
