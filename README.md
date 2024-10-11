@@ -75,17 +75,72 @@ Edit the `.env` file and set the following variables:
 Here are some example commands:
 
 ```sh
-# Get all API products
-konnectctl get api-product
-
-# Create an API product
-konnectctl create api-product -n "My API" -d "My API description"
-
-# Create a control plane
-konnectctl create control-plane --name "My Control Plane" --cluster-type CLUSTER_TYPE_CONTROL_PLANE
-
-# Get help
 konnectctl --help
+Konnect CLI
+
+Usage: konnectctl <COMMAND>
+
+Commands:
+  get     Get Konnect objects
+  create  Create Konnect objects
+  delete  Delete Konnect objects
+  patch   Patch Konnect objects
+  help    Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+```
+
+```sh
+konnectctl get --help
+Get Konnect objects
+
+try konnectctl get --help
+
+Usage: konnectctl get <COMMAND>
+
+Commands:
+  api-product                        Get API product(s). This will return a list of products or a product depending on whether a product id is passed or not
+  api-product-version                Get version(s) for a given API product
+  api-product-version-specification  Get specification(s) for a given API product and version. This will return a list of specs or a spec depending on whether a spec id is passed or not
+  help                               Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --hel
+```
+
+```sh
+konnectctl get api-product --help
+Get API product(s). This will return a list of products or a product depending on whether a product id is passed or not.
+
+Additionally pass a name if you want to filter by name of API Product.
+
+e.g usage
+
+To get a list of API products
+
+konnectctl get api-product | jq '.data[0]id'
+
+To get a specific product
+
+konnectctl get api-product --id <api-product-id> | jq '.id'
+
+To get a product by name
+
+konnectctl get api-product --name "abd" | jq '.data[0].id'
+
+Usage: konnectctl get api-product [OPTIONS]
+
+Options:
+  -i, --id <ID>
+          The id of the API Product
+
+  -n, --name <NAME>
+          The name of the API Product
+
+  -h, --help
+          Print help (see a summary with '-h')
 ```
 
 For more detailed usage instructions, run `konnectctl <command> --help`.
